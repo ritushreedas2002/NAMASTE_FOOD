@@ -1,5 +1,5 @@
 import './ResCard.css';
-
+import { CDN_URL } from '../utils/constants';
 const ResCard = (props) => {
     const { data } = props;
     const{name,cuisines,avgRating,cloudinaryImageId}=data?.info;   
@@ -9,8 +9,8 @@ const ResCard = (props) => {
         <div className="res-card">
             <img
                 className='res-logo'
-                src={`https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/${cloudinaryImageId}`}
-                alt="IMAGE CARD LOGO"
+                src={CDN_URL +cloudinaryImageId}
+                alt="CARD LOGO"
             />
             <h3>{name}</h3>
             <h4>CUISINES: {cuisines.join(",")}</h4>

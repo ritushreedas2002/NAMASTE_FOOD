@@ -19,3 +19,9 @@
     text-decoration: none;
     list-style: none;
 }
+
+.log:hover{
+    width:60px;
+    cursor: pointer;
+    background-color: aquamarine;
+}
