@@ -1,37 +1,34 @@
-import React from "react"
-import { useEffect,useState } from "react";
+import React, { useState } from "react"
 import Shimmer from "./Shimmer";
 import { useParams } from "react-router-dom";
+import useRestaurantMenu from "../utils/useRestaurantMenu";
+import RestaurantCategory from "./RestaurantCategory";
 const RestaurantMenu=()=>{
 
     const {restid}=useParams();//Params is a object to fetch the unique id of the dynamic routing
-    console.log(restid);
-    const [restInfo,setrestInfo]=useState(null);
-    useEffect(()=>{
-        fetchMenu();
-    });
+    const [showIndex,setShowIndex]=useState(0);
 
-    const fetchMenu=async()=>{
-        const data=await fetch("https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=12.9351929&lng=77.62448069999999&restaurantId="+restid+"&submitAction=ENTER");
-        const json=await data.json();
-        console.log(json);
-        setrestInfo(json.data);
-    }
+    //Use of Custom Hook to fetch data of each Restaurant
+   const restInfo=useRestaurantMenu(restid);
+   if(restInfo===null)return<Shimmer/>;
 
     const data=restInfo?.cards[0]?.card.card.info;
-    const item=restInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card.card.itemCards;
-    console.log(item);
+    //const {itemCards}= restInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card.card ;
+    //console.log(itemCards);
    
-    return restInfo===null?<Shimmer/>:(
-        <div>
-            <h1>{data.name}</h1>
-            <h3>{data.cuisines.join(",")}  -   {data.costForTwo/100}  cost For Two</h3>
-            <h2>Menu</h2>
-            <ul>
-                {item.map((res) => (
-                    <li key={res.card.id}>{res.card.info.name}- Rs {res.card.info.price / 100 || res.card.info.defaultPrice / 100}</li>
-                 ))}
-            </ul>
+    //FILTER----out all the item categories and enhance the individual restaurant menu
+    const categories=restInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter((c)=>c.card?.card?.["@type"]==="type.googleapis.com/swiggy.presentation.food.v2.ItemCategory");
+    return (
+        <div className="text-center m-4 p-4 ">
+            <h1 className="font-bold text-2xl my-9">{data.name}</h1>
+            <h3 className="px-3 text-lg">{data.cuisines.join(",")}  -   {data.costForTwo/100}  cost For Two</h3>
+           {/*Categories----acoordions */}
+           {categories.map((category,index)=>(
+                <RestaurantCategory key={category?.card?.card.title} 
+                data={category?.card?.card} 
+                showItems={index===showIndex?true:false}
+                setShowIndex={()=>setShowIndex(index)}/>
+           ))}
         </div>
     )
 }

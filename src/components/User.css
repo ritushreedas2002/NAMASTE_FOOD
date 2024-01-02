@@ -1,0 +1,12 @@
+.User-card{
+    width:250px;
+    height:300px;
+    border: 1px solid black;
+    margin: 2px;
+    padding: 5px;
+}
+
+.User-card img{
+    width:100px;
+    height: 100px;
+}
