@@ -5,11 +5,14 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useOnlineStatus from '../utils/useOnlineStatus';
 import UserContext from "./UserContext";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [button,setbutton]=useState("Login");
   const onlineStatus=useOnlineStatus();
   const { loggedInUser } = useContext(UserContext);
+  //read items from the store
+  const cartItems=useSelector((store)=>store.cart.items);
   
   const Grocery=lazy(()=>{
     import("./Grocery");
@@ -31,7 +34,7 @@ const Header = () => {
           <li className="px-4 m-1"><Link to="/about">ABOUT US</Link></li>
           <li className="px-4 m-1"><Link to="/contact">CONTACT US</Link></li>
           <li className="px-4 m-1"><Link to="/grocery">Grocery</Link></li>
-          <li className="px-4 m-1">CART</li>
+          <li className="px-4 m-1"><Link to="/cart">CART-{cartItems.length}</Link></li>
           <button className="px-4 m-1" onClick={Click}>{button}</button>
           <li>{loggedInUser}</li>
         </ul>

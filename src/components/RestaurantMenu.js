@@ -6,7 +6,7 @@ import RestaurantCategory from "./RestaurantCategory";
 const RestaurantMenu=()=>{
 
     const {restid}=useParams();//Params is a object to fetch the unique id of the dynamic routing
-    const [showIndex,setShowIndex]=useState(0);
+    const [showIndex,setShowIndex]=useState(null);
 
     //Use of Custom Hook to fetch data of each Restaurant
    const restInfo=useRestaurantMenu(restid);
@@ -27,8 +27,11 @@ const RestaurantMenu=()=>{
                 <RestaurantCategory key={category?.card?.card.title} 
                 data={category?.card?.card} 
                 showItems={index===showIndex?true:false}
-                setShowIndex={()=>setShowIndex(index)}/>
+                setShowIndex={()=>showIndex===null || showIndex!==index?setShowIndex(index):setShowIndex(null)}
+                />
+                
            ))}
+           {/* */}
         </div>
     )
 }

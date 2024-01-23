@@ -84,5 +84,5 @@ return listOfRestaurants.length === 0?<Shimmer/>:(            //called condition
     </div>
   </div>
 );
- }
+    }
 export default Body;

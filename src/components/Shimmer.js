@@ -1,18 +1,9 @@
 import './Shimmer.css'
+import { ShimmerPostList } from "react-shimmer-effects";
+
 const Shimmer=()=>{
-    return (
-        <div className="shimmer-container">
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-        </div>
-    )
+    return <ShimmerPostList postStyle="STYLE_FOUR" col={3} row={2} gap={30} />;
 }
 export default Shimmer;
+
+//npm install react-shimmer-effects --save --f

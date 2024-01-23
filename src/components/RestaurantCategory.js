@@ -1,8 +1,12 @@
+
 import ItemList from "./ItemList";
 
 const RestaurantCategory=({data,showItems,setShowIndex})=>{
+
     const handleClick=()=>{
-        setShowIndex();
+            setShowIndex();
+
+        
     }
     return (
         <div>
@@ -12,7 +16,7 @@ const RestaurantCategory=({data,showItems,setShowIndex})=>{
                 <span className="text-bold text-lg">{data.title} ({data.itemCards.length})</span>
                 <span className="text-bold text-xl"> ^</span>
                 </div>
-                {/*BOdy */}
+                {/*Body */}
                 {showItems&&<ItemList items={data.itemCards}/>}
              </div>
            
